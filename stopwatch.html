@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>StopWatch</title>
+<style type="text/css">
+		body{
+			background:black;
+			color: #f6f6f6;
+            text-align: center;;
+			justify-content: center;
+		}
+       hr{
+           width:50%;
+       }
+		.stopwatch {
+			font-size: 12em;
+		}
+      button{
+          height:50px;
+          width:100px;
+          border:0px;
+          border-radius:20px;
+          color:white;
+          box-shadow: skyblue 0px 3px 3px;
+      }
+
+      button:hover{
+          box-shadow:skyblue 0px 0px 0px;
+      }
+		#green{
+            background:green;
+        }
+        #yellow{
+            background-color:sandybrown;
+        }
+        #red{
+            background:red;
+        }
+        #blue{
+            background:royalblue;
+        }
+        #orange{
+            background:orange;
+        }
+        p{
+            color:white;
+            font-family: 'Courier New', Courier, monospace;
+            font-size:2em;
+        }
+        a{
+            color: thistle;
+        }
+        a:hover{
+            color:tan;
+            text-decoration: none;
+        }
+	</style>
+</head>
+<body>
+    
+    <p>StopWatch - <a href="https://github.com/vashistha-10">Developer's GitHub</a>
+    </p>
+    <hr>
+    
+<div class="stopwatch">00:00:00</div>
+<div class="controls">
+<button onclick="start()" id="green">Start</button>
+<button onclick="pause()" id="yellow">Pause</button>
+<button onclick="stop()" id="red">Reset</button>
+<button onclick="lap()" id="blue">Lap</button>
+<button onclick="resetLaps()"  id="orange">Reset Laps</button>
+</div>
+
+<br>
+<hr>
+<h3 class="laps"></h3>
+<script>
+		
+		var ms = 0, s = 0, m = 0;
+		var timer;
+
+		var stopwatchEl = document.querySelector('.stopwatch');
+		var lapsContainer = document.querySelector('.laps');
+
+		function start() {
+			if(!timer) {
+				timer = setInterval(run, 10);
+			}
+		}
+
+		function run() {
+			stopwatchEl.textContent = getTimer();
+			ms++;
+			if(ms == 100) {
+				ms = 0;
+				s++;
+			}
+			if(s == 60) {
+				s = 0;
+				m++;
+			}
+		}
+
+		function pause() {
+			stopTimer();
+		}
+
+		function stop() {
+			stopTimer();
+			ms = 0;
+			s = 0;
+			m = 0;
+			stopwatchEl.textContent = getTimer();
+		}
+
+		function stopTimer() {
+			clearInterval(timer);
+			timer = false;
+		}
+
+		function getTimer() {
+			return (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s) + ":" + (ms < 10 ? "0" + ms : ms);
+		}
+
+		function restart() {
+			stop();
+			start();
+		}
+
+		function lap() {
+			if(timer) {
+				var li = document.createElement('h3');
+				li.innerText = getTimer();
+				lapsContainer.appendChild(li);
+			}
+		}
+
+		function resetLaps() {
+			lapsContainer.innerHTML = '';
+		}
+
+	</script>
+<script src="https://ajax.cloudflare.com/cdn-cgi/scripts/7089c43e/cloudflare-static/rocket-loader.min.js" data-cf-settings="606426e18b4f09d98884bb02-|49" defer=""></script></body>
+</html>
